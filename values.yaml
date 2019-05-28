@@ -1,0 +1,19 @@
+namespace:
+  default: "default"
+
+ehanlin:
+  tutor:
+    java:
+      probeSeconds: 50
+      app:
+        chest:
+          name: "tutor-chest"
+          image: "gcr.io/helm-test-2015/ms-currency/chest:0.1.18"
+          probePath: "/healthz"
+
+    ingress:
+      http:
+        servicePort: 80
+        paths:
+          - path: /chest
+            serviceName: tutor-chest

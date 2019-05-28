@@ -1,0 +1,32 @@
+{{- $topLevel := . }}
+{{- $namespace := $topLevel.Values.namespace.default }}
+{{- with .Values.ehanlin.tutor.java.app.chest }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: {{ $namespace }}
+  name: {{ $.Release.Name }}-{{ .name }}
+  labels:
+    app: {{ .name | quote }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .name | quote }}
+  template:
+    metadata:
+      labels:
+        app: {{ .name | quote }}
+    spec:
+      {{- include "ehanlin.containers" $topLevel | indent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ $namespace }}
+  name: tutor-chest
+  labels:
+    app: tutor-chest
+spec:
+  {{- include "ehanlin.service.nodeport" $topLevel }}
+{{- end }}

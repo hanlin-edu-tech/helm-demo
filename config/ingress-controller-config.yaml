@@ -1,0 +1,9 @@
+defaultBackend:
+  enabled: false
+  
+controller:
+  defaultBackendService: "kube-system/default-http-backend"
+  service:
+    type: NodePort
+    nodePorts:
+      http: 30000

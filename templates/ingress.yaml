@@ -1,0 +1,17 @@
+{{- $topLevel := . }}
+{{- $namespace := $topLevel.Values.namespace.default }}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-nginx
+  namespace: {{ $namespace }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: infinity2015.0-1.tw
+      http:
+        paths:
+        {{- include "ehanlin.ingress.httpPaths" . | indent 4 }}
